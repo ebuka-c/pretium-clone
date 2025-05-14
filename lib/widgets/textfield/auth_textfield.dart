@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:pretium_clone/utils/validators.dart';
 import '../../constants/app_colors.dart';
 import '../../constants/custom_textstyles.dart';
 
@@ -10,7 +9,7 @@ class AuthTextField extends StatelessWidget {
     super.key,
     this.onTap,
     this.focusNode,
-    this.prefix,
+    this.prefixIcon,
     this.inputFormatters,
     required this.controller,
     this.suffixIcon,
@@ -48,6 +47,7 @@ class AuthTextField extends StatelessWidget {
     this.textInputAction,
     this.expands,
     this.minLines,
+    this.onFieldSubmitted,
   });
   final TextEditingController controller;
   final String? subtitle, prefixText;
@@ -72,105 +72,97 @@ class AuthTextField extends StatelessWidget {
   final double bottomMargin;
   final Function()? onTap;
   final List<TextInputFormatter>? inputFormatters;
-  final Widget? prefix;
+  final Widget? prefixIcon;
   final FocusNode? focusNode;
   final Function(String)? onChanged;
   final InputBorder? errorBorder, focusedBorder, enabledBorder;
   final int? maxlines, minLines;
   final String? label;
   final bool hasConstraints;
+  final void Function(String)? onFieldSubmitted;
 
   final TextInputAction? textInputAction;
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: EdgeInsets.only(bottom: 5.h),
-      height: 58.h,
-      margin: EdgeInsets.only(bottom: bottomMargin),
-      constraints:
-          hasConstraints
-              ? BoxConstraints(
-                minHeight: minHeight ?? 56.0.h,
-                maxHeight: maxHeight ?? double.infinity,
-              )
-              : null,
-      decoration: BoxDecoration(
-        color: AppColors.authfield,
-        borderRadius: BorderRadius.circular(14),
-      ),
-      child: Align(
-        alignment: Alignment.bottomCenter,
-        child: TextFormField(
-          controller: controller,
-
-          onTap: onTap,
-          cursorHeight: 20.h,
-          maxLines: maxlines ?? 1,
-          minLines: minLines,
-          expands: expands ?? false,
-          style: textStyle ?? bodyMedium.copyWith(color: AppColors.primaryText),
-          onChanged: onChanged,
-          keyboardType: keyboardType,
-          obscuringCharacter: '*',
-          focusNode: focusNode,
-          textInputAction: textInputAction,
-          textCapitalization: textCapitalization ?? TextCapitalization.none,
-          onTapOutside: (PointerDownEvent event) {
-            FocusManager.instance.primaryFocus?.unfocus();
-          },
-          inputFormatters: inputFormatters,
-          cursorWidth: 1,
-          cursorColor: AppColors.secondaryText,
-          readOnly: readOnly ?? false,
-          validator: validator ?? AppValidators.validateEmptyField,
-          decoration: InputDecoration(
-            prefixText: prefixText,
-            filled: filled ?? true,
-            fillColor: AppColors.authfield,
-            hintText: hintText ?? '',
-            contentPadding: EdgeInsets.only(left: 30.w, right: 10),
-            label: Text(
-              '$label ',
-              style: bodyMedium.copyWith(color: AppColors.secondaryText),
-            ),
-
-            hintStyle:
-                hintStyle ?? bodyMedium.copyWith(color: AppColors.filterText),
-            border: OutlineInputBorder(
-              borderSide: BorderSide.none,
-              borderRadius: BorderRadius.circular(borderRadius ?? 14),
-            ),
-            errorBorder:
-                errorBorder ??
-                OutlineInputBorder(
-                  borderSide: BorderSide.none,
-                  borderRadius: BorderRadius.circular(borderRadius ?? 14),
-                ),
-            errorStyle: bodySmall.copyWith(
-              color: AppColors.maroon,
-              fontSize: 11.sp,
-            ),
-            enabledBorder:
-                enabledBorder ??
-                OutlineInputBorder(
-                  borderSide: BorderSide.none,
-                  borderRadius: BorderRadius.circular(borderRadius ?? 14),
-                ),
-            focusedBorder: OutlineInputBorder(
-              borderSide: BorderSide.none,
-              borderRadius: BorderRadius.circular(borderRadius ?? 14),
-            ),
-            focusedErrorBorder: OutlineInputBorder(
-              borderSide: BorderSide.none,
-              borderRadius: BorderRadius.circular(borderRadius ?? 14),
-            ),
-            prefix: prefix,
-            suffixIcon: suffixIcon,
-          ),
-          obscureText: obscureText,
+    return TextFormField(
+      controller: controller,
+      onTap: onTap,
+      cursorHeight: 20.h,
+      maxLines: maxlines ?? 1,
+      minLines: minLines,
+      expands: expands ?? false,
+      style: textStyle ?? bodyMedium.copyWith(color: AppColors.primaryText),
+      onChanged: onChanged,
+      keyboardType: keyboardType,
+      obscuringCharacter: '*',
+      focusNode: focusNode,
+      textInputAction: textInputAction,
+      textCapitalization: textCapitalization ?? TextCapitalization.none,
+      onTapOutside: (PointerDownEvent event) {
+        FocusManager.instance.primaryFocus?.unfocus();
+      },
+      onFieldSubmitted: onFieldSubmitted,
+      inputFormatters: inputFormatters,
+      cursorWidth: 1,
+      cursorColor: AppColors.secondaryText,
+      readOnly: readOnly ?? false,
+      validator: validator,
+      decoration: InputDecoration(
+        prefixText: prefixText,
+        filled: false,
+        fillColor: AppColors.authfield,
+        hintText: hintText ?? '',
+        contentPadding: EdgeInsets.only(left: 30.w, right: 10),
+        label: Text(
+          '$label ',
+          style: bodyMedium.copyWith(color: AppColors.primary),
         ),
+        hintStyle: hintStyle ?? bodyMedium.copyWith(color: AppColors.grey),
+        disabledBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(10),
+          borderSide: BorderSide(color: Colors.grey, width: 1.0),
+        ),
+        focusedBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(10),
+          borderSide: BorderSide(color: AppColors.primary, width: 1.0),
+        ),
+        labelStyle: TextStyle(color: AppColors.primary.withValues(alpha: 0.6)),
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(10),
+          borderSide: BorderSide(color: Colors.grey, width: 1.0),
+        ),
+        errorBorder:
+            errorBorder ??
+            OutlineInputBorder(
+              borderSide: BorderSide(
+                width: 1,
+                color: bordersideColor ?? AppColors.maroon,
+              ),
+              borderRadius: BorderRadius.circular(borderRadius ?? 10),
+            ),
+        focusedErrorBorder: OutlineInputBorder(
+          borderSide: BorderSide(
+            width: 1.5,
+            color: bordersideColor ?? AppColors.maroon,
+          ),
+          borderRadius: BorderRadius.circular(borderRadius ?? 10),
+        ),
+        errorStyle: bodySmall.copyWith(
+          color: AppColors.maroon,
+          fontSize: 11.sp,
+        ),
+        enabledBorder:
+            enabledBorder ??
+            OutlineInputBorder(
+              borderRadius: BorderRadius.circular(10),
+              borderSide: BorderSide(color: Colors.grey, width: 0.5),
+            ),
+
+        prefixIcon: prefixIcon,
+        suffixIcon: suffixIcon,
       ),
+      obscureText: obscureText,
     );
   }
 }

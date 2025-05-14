@@ -71,7 +71,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
               child: GestureDetector(
                 onTap: () {
                   Navigator.of(context).pushNamedAndRemoveUntil(
-                    AppRoutes.signUp,
+                    AppRoutes.signIn,
                     (Route<dynamic> route) => false,
                   );
                 },
@@ -126,7 +126,12 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
             SizedBox(height: 20.h),
             AppButton(
               onTap: () {
-                goNext();
+                isLastPage
+                    ? Navigator.of(context).pushNamedAndRemoveUntil(
+                      AppRoutes.signIn,
+                      (Route<dynamic> route) => false,
+                    )
+                    : goNext();
               },
               isOutline: false,
               btnRadius: 12,

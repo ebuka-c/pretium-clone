@@ -2,9 +2,10 @@ import 'package:flutter/material.dart';
 
 class AppColors {
   static final Color primary = const Color.fromARGB(255, 0, 77, 64);
+  static final Color teal = Colors.teal;
   static final Color secondary = const Color.fromRGBO(224, 242, 241, 1);
   static const Color email = Color(0xFF536471);
-  static const primaryText = Color(0xff0F1419);
+  static const primaryText = Color.fromRGBO(15, 20, 10, 1);
   static const divider2 = Color(0xffD9D9D9);
   static const secondaryText = Color(0xff61677D);
   static const btnBorder = Color(0xffEFF0F6);

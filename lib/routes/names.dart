@@ -4,7 +4,6 @@ class AppRoutes {
   static const onboarding = "/onboarding";
   //register page
   static const signUp = "/signUp";
-  static const getStarted = "/getStarted";
 
   // verify email
   static const otpEmailVerification = "/otpEmailVerification";
@@ -12,6 +11,8 @@ class AppRoutes {
   //sign in page
   static const signIn = "/sign_in";
   static const forgotPwd = "/forgotPwd";
+  static const resetPwd = "/resetPwd";
+  static const verifyAccount = "/verifyAccount";
 
   //home
   static const homeScreen = "/homeScreen";

@@ -36,7 +36,7 @@ class OnboardingContent extends StatelessWidget {
             fontFamily: 'robotoBold',
           ),
         ),
-        SizedBox(height: 15.h),
+        SizedBox(height: 10.h),
         Text(
           subheading,
           textAlign: TextAlign.center,

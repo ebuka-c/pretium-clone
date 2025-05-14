@@ -11,6 +11,8 @@ import 'package:pretium_clone/routes/pages.dart' show AppPages;
 import 'constants/custom_textstyles.dart';
 import 'routes/observer.dart';
 
+final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
+
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
@@ -46,6 +48,7 @@ class MyApp extends StatelessWidget {
             debugShowCheckedModeBanner: false,
             title: 'Pretium_clone',
             locale: DevicePreview.locale(context),
+            navigatorKey: navigatorKey,
             builder: DevicePreview.appBuilder,
             theme: ThemeData(
               colorScheme: ColorScheme.fromSeed(
@@ -63,6 +66,11 @@ class MyApp extends StatelessWidget {
               appBarTheme: AppBarTheme(
                 backgroundColor: AppColors.transparent,
                 foregroundColor: AppColors.primaryText,
+              ),
+              checkboxTheme: CheckboxThemeData(
+                fillColor: WidgetStateProperty.fromMap({
+                  WidgetState.selected: AppColors.primary,
+                }),
               ),
               bottomSheetTheme: BottomSheetThemeData(
                 backgroundColor: AppColors.white,

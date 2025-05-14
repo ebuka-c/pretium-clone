@@ -3,9 +3,54 @@ import 'package:flutter/foundation.dart';
 class AppValidators {
   AppValidators._();
 
-  static String? validateEmptyField(String? text) {
+  static String? validateCodeField(String? text) {
     if ((text ?? '').isEmpty) {
-      return 'Field cannot be empty';
+      return 'Please enter the reset code';
+    }
+    if ((text?.length ?? 0) < 4) {
+      return 'Please enter the complete 4-digit code';
+    }
+    return null;
+  }
+
+  static String? validateEmptyPasswordField(String? text) {
+    if ((text ?? '').isEmpty) {
+      return 'Please enter your password';
+    }
+    return null;
+  }
+
+  static String? validateEmptyCodeField(String? text) {
+    if ((text ?? '').isEmpty) {
+      return 'Please enter verification code';
+    }
+    return null;
+  }
+
+  static String? validateFirstName(String? text) {
+    if ((text ?? '').isEmpty) {
+      return 'Please enter your first name';
+    }
+    return null;
+  }
+
+  static String? validateLastName(String? text) {
+    if ((text ?? '').isEmpty) {
+      return 'Please enter your last name';
+    }
+    return null;
+  }
+
+  static String? validateEmptyNewPwdField(String? text) {
+    if ((text ?? '').isEmpty) {
+      return 'Please enter a new password';
+    }
+    return null;
+  }
+
+  static String? validateEmptyConfirmPwdField(String? text) {
+    if ((text ?? '').isEmpty) {
+      return 'Please confirm your password';
     }
     return null;
   }
@@ -33,27 +78,12 @@ class AppValidators {
     if (!emailRegex.hasMatch(value!)) {
       return 'Enter a valid email address';
     }
-
-    return null;
-  }
-
-  static String? validateRecoveryEmail(String? value) {
-    if (value == null || value.isEmpty) {
-      return 'Enter a valid email address';
-    }
-
-    final RegExp emailRegex = RegExp(
-      r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$',
-    );
-
-    if (!emailRegex.hasMatch(value)) {
-      return 'Enter a valid email address';
+    if (value.isEmpty) {
+      return 'Please enter your email';
     }
 
     return null;
   }
-
-  static bool isButtonPressed = false;
 
   static String? validatePin(String? pin) {
     if (pin == null || pin.isEmpty) {
@@ -66,10 +96,6 @@ class AppValidators {
     return null;
   }
 
-  static void verifyPin() {
-    isButtonPressed = true;
-  }
-
   static String? pswdValidator(String? value) {
     RegExp strongPwsdRegex = RegExp(r'^(?=.*?[A-Z])(?=.*?[A-Z]).{6,}$');
     if (value!.isEmpty) {
@@ -77,21 +103,6 @@ class AppValidators {
     } else {
       if (!strongPwsdRegex.hasMatch(value)) {
         return 'Not Strong Enough. Must contain: \n- uppercase letter\n- lower case letter\n- Be atleast 6 characters long';
-      } else {
-        return null;
-      }
-    }
-  }
-
-  static String? validateNewPwd(String? value) {
-    RegExp strongPwsdRegex = RegExp(
-      r'^(?=.*[!@#$%^&*(),.?":{}|<>])(?=.*[a-z])(?=.*[A-Z]).{8,}$',
-    );
-    if (value!.isEmpty) {
-      return 'Password field must not be empty';
-    } else {
-      if (!strongPwsdRegex.hasMatch(value)) {
-        return 'Must contain: \n- uppercase letter\n- lower case letter\n- Be atleast 8 characters long';
       } else {
         return null;
       }

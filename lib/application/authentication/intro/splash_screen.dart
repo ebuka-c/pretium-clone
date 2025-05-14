@@ -57,7 +57,7 @@ class _SplashScreenState extends State<SplashScreen> {
             Image.asset(AppImages.logo),
             Text(
               'PRETIUM',
-              style: bodyLarge.copyWith(
+              style: bodyMedium.copyWith(
                 color: AppColors.white,
                 fontWeight: FontWeight.bold,
               ),

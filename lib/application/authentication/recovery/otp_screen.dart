@@ -3,10 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:pinput/pinput.dart';
 
-import '../../../../constants/app_colors.dart';
-import '../../../../constants/custom_textstyles.dart';
-import '../../../../utils/validators.dart';
-import '../../../../widgets/buttons/app_button.dart';
+import '../../../constants/app_colors.dart';
+import '../../../constants/custom_textstyles.dart';
+import '../../../utils/validators.dart';
+import '../../../widgets/buttons/app_button.dart';
 
 class OtpEmailVerification extends StatelessWidget {
   OtpEmailVerification({super.key});
@@ -59,14 +59,6 @@ class OtpEmailVerification extends StatelessWidget {
                 validator: AppValidators.validatePin,
                 onCompleted: (value) {
                   correctOtp = value;
-
-                  // verify email
-                  // context.read<SignUpBloc>().add(
-                  //   ConfirmEmailVerificationEvent(
-                  //     email: state.email ?? "",
-                  //     otp: value,
-                  //   ),
-                  // );
                 },
               ),
               SizedBox(height: 100.h),

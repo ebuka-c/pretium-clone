@@ -1,9 +1,10 @@
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:pretium_clone/constants/app_colors.dart';
-import 'package:pretium_clone/constants/app_svgs.dart';
 import 'package:pretium_clone/routes/names.dart';
+import 'package:pretium_clone/utils/validators.dart';
 
 import '../../../constants/custom_textstyles.dart';
 import '../../../widgets/buttons/app_button.dart';
@@ -14,154 +15,189 @@ final _emailC = TextEditingController();
 final _pwdC = TextEditingController();
 
 class SignInScreen extends StatelessWidget {
-  const SignInScreen({super.key});
+  SignInScreen({super.key});
+
+  final formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Padding(
-        padding: EdgeInsets.fromLTRB(24.w, 20.h, 24.w, 0),
-        child: SingleChildScrollView(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Text(
-                'Sign In',
-                style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                  color: AppColors.primary,
-                  fontWeight: FontWeight.w600,
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: EdgeInsets.fromLTRB(24.w, 80.h, 24.w, 0),
+          child: Form(
+            key: formKey,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Container(
+                  padding: EdgeInsets.all(12.sp),
+                  decoration: BoxDecoration(
+                    color: AppColors.secondary,
+                    borderRadius: BorderRadius.circular(15),
+                  ),
+                  child: Icon(
+                    Icons.account_balance_wallet,
+                    color: AppColors.primary,
+                    size: 30.sp,
+                  ),
                 ),
-              ),
-              SizedBox(height: 16.h),
-              SizedBox(
-                width: 267.w,
-                child: Text(
-                  'Login with your credential to gain access into your account feed.',
-                  textAlign: TextAlign.center,
-                  style: bodySmall,
+                SizedBox(height: 20.h),
+                Text(
+                  'Welcome Back!',
+                  style: Theme.of(context).textTheme.titleSmall?.copyWith(
+                    fontWeight: FontWeight.bold,
+                    fontFamily: 'robotoBold',
+                  ),
                 ),
-              ),
-              SizedBox(height: 24.h),
+                SizedBox(height: 10.h),
+                SizedBox(
+                  width: 267.w,
+                  child: Text(
+                    'Sign in to continue',
+                    textAlign: TextAlign.center,
+                    style: bodySmall.copyWith(color: AppColors.grey),
+                  ),
+                ),
+                SizedBox(height: 35.h),
+                AuthTextField(
+                  controller: _emailC,
+                  keyboardType: TextInputType.emailAddress,
+                  obscureText: false,
+                  label: 'Email',
+                  hintText: 'Enter your email',
+                  bottomMargin: 16.h,
+                  validator: AppValidators.validateEmail,
+                  hasConstraints: false,
+                  prefixIcon: Icon(
+                    Icons.mail_outline,
+                    color: AppColors.primaryText,
+                  ),
+                ),
+                SizedBox(height: 22.h),
+                BlocBuilder<SignInBloc, SignInState>(
+                  builder: (context, state) {
+                    return AuthTextField(
+                      controller: _pwdC,
+                      keyboardType: TextInputType.emailAddress,
+                      obscureText: state.pwdObscure,
+                      label: 'Password',
+                      hintText: 'Enter your password',
+                      bottomMargin: 0,
+                      hasConstraints: false,
+                      validator: AppValidators.validateEmptyPasswordField,
+                      prefixIcon: Icon(
+                        Icons.lock_outline,
+                        color: AppColors.primaryText,
+                      ),
+                      suffixIcon: GestureDetector(
+                        onTap: () {
+                          context.read<SignInBloc>().add(
+                            TogglePasswordObscureEvent(),
+                          );
+                        },
+                        child: Icon(
+                          state.pwdObscure
+                              ? Icons.visibility_off_outlined
+                              : Icons.visibility_outlined,
+                          color: AppColors.secondaryText,
+                        ),
+                      ),
+                    );
+                  },
+                ),
+                SizedBox(height: 15.h),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Row(
+                      children: [
+                        BlocBuilder<SignInBloc, SignInState>(
+                          builder: (context, state) {
+                            return Checkbox(
+                              value: state.rememberMe,
+                              onChanged: (value) {
+                                context.read<SignInBloc>().add(
+                                  ToggleRememberMeEvent(),
+                                );
+                              },
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(4),
+                              ),
+                              materialTapTargetSize:
+                                  MaterialTapTargetSize.shrinkWrap,
+                              visualDensity: VisualDensity.compact,
+                            );
+                          },
+                        ),
+                        Text(
+                          'Remember Me',
+                          style: bodySmall.copyWith(color: AppColors.grey),
+                        ),
+                      ],
+                    ),
 
-              AuthTextField(
-                controller: _emailC,
-                keyboardType: TextInputType.emailAddress,
-                obscureText: false,
-                label: 'Enter Email',
-                bottomMargin: 16.h,
-                hasConstraints: false,
-              ),
-              BlocBuilder<SignInBloc, SignInState>(
-                builder: (context, state) {
-                  return AuthTextField(
-                    controller: _pwdC,
-                    keyboardType: TextInputType.emailAddress,
-                    obscureText: state.pwdObscure,
-                    label: 'Enter Password',
-                    bottomMargin: 0,
-                    hasConstraints: false,
-                    suffixIcon: GestureDetector(
-                      onTap: () {
-                        context.read<SignInBloc>().add(
-                          TogglePasswordObscureEvent(),
-                        );
+                    TextButton(
+                      onPressed: () {
+                        Navigator.of(context).pushNamed(AppRoutes.forgotPwd);
                       },
-                      child: Icon(
-                        state.pwdObscure
-                            ? Icons.visibility_off_outlined
-                            : Icons.visibility_outlined,
-                        color: AppColors.secondaryText,
+                      child: Text(
+                        'Forgot Password?',
+                        textAlign: TextAlign.center,
+                        style: bodySmall.copyWith(
+                          color: AppColors.primary,
+                          fontWeight: FontWeight.w600,
+                        ),
                       ),
                     ),
-                  );
-                },
-              ),
-              Align(
-                alignment: Alignment.bottomRight,
-                child: TextButton(
-                  onPressed: () {
-                    Navigator.of(
-                      context,
-                    ).pushNamed(AppRoutes.otpEmailVerification);
+                  ],
+                ),
+                SizedBox(height: 40.h),
+                AppButton(
+                  isOutline: false,
+                  boxShadow: true,
+                  onTap: () {
+                    if (formKey.currentState?.validate() ?? false) {
+                      Navigator.of(context).pushNamedAndRemoveUntil(
+                        AppRoutes.homeScreen,
+                        (Route<dynamic> route) => false,
+                      );
+                    }
                   },
-                  child: Text(
-                    'Forgot Password?',
-                    textAlign: TextAlign.center,
-                    style: bodySmall.copyWith(color: AppColors.secondaryText),
+                  btnRadius: 14,
+                  isAuth0: false,
+                  text: 'Login',
+                ),
+                SizedBox(height: 50.h),
+
+                Text.rich(
+                  textAlign: TextAlign.center,
+                  TextSpan(
+                    children: [
+                      TextSpan(
+                        text: 'Don\'t have an account? ',
+                        style: bodySmall.copyWith(
+                          color: AppColors.secondaryText,
+                        ),
+                      ),
+                      TextSpan(
+                        text: 'Sign Up',
+                        style: bodySmall.copyWith(
+                          fontWeight: FontWeight.w600,
+                          color: AppColors.primary,
+                        ),
+                        recognizer:
+                            TapGestureRecognizer()
+                              ..onTap =
+                                  () => Navigator.of(
+                                    context,
+                                  ).pushNamed(AppRoutes.signUp),
+                      ),
+                    ],
                   ),
                 ),
-              ),
-              AppButton(
-                isOutline: false,
-                boxShadow: true,
-                onTap: () {
-                  Navigator.of(context).pushNamedAndRemoveUntil(
-                    AppRoutes.homeScreen,
-                    (Route<dynamic> route) => false,
-                  );
-                },
-                btnRadius: 14,
-                isAuth0: false,
-                text: 'Login',
-              ),
-              SizedBox(height: 10.h),
-
-              Row(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Expanded(
-                    child: Divider(color: AppColors.divider, endIndent: 12),
-                  ),
-                  Text(
-                    'Or',
-                    style: bodySmall.copyWith(
-                      fontSize: 12.sp,
-                      color: AppColors.grey,
-                    ),
-                  ),
-                  Expanded(
-                    child: Divider(color: AppColors.divider, indent: 12),
-                  ),
-                ],
-              ),
-              SizedBox(height: 16.h),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Expanded(
-                    child: AppButton(
-                      isOutline: false,
-                      boxShadow: false,
-                      btnColor: AppColors.authfield,
-                      svgString: AppSvgs.fbIcon,
-                      onTap: () {},
-                      btnRadius: 14,
-                      mode: 'Facebook',
-                      textColor: AppColors.secondaryText,
-                      fontSize: 12.sp,
-                      isAuth0: true,
-                    ),
-                  ),
-                  SizedBox(width: 15.w),
-                  Expanded(
-                    child: AppButton(
-                      isOutline: false,
-                      boxShadow: false,
-                      btnColor: AppColors.authfield,
-                      svgString: AppSvgs.googleIcon,
-                      onTap: () {},
-                      btnRadius: 14,
-                      mode: 'Google',
-                      textColor: AppColors.secondaryText,
-                      fontSize: 12.sp,
-                      isAuth0: true,
-                    ),
-                  ),
-                ],
-              ),
-
-              SizedBox(height: 22.h),
-            ],
+              ],
+            ),
           ),
         ),
       ),

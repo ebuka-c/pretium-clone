@@ -12,6 +12,8 @@ class SignInBloc extends Bloc<SignInEvent, SignInState> {
 
     on<TogglePasswordObscureEvent>(_toggleEvent);
     on<ToggleConfirmPasswordObscureEvent>(_onToggleConfirmPwd);
+    on<ToggleRememberMeEvent>(_onToggleRememberMeEvent);
+    on<ToggleAcceptTCEvent>(_onToggleAcceptTCEvent);
   }
 
   void _toggleEvent(
@@ -26,5 +28,19 @@ class SignInBloc extends Bloc<SignInEvent, SignInState> {
     Emitter<SignInState> emit,
   ) {
     emit(state.copyWith(pwdObscure2: !state.pwdObscure2));
+  }
+
+  void _onToggleRememberMeEvent(
+    ToggleRememberMeEvent event,
+    Emitter<SignInState> emit,
+  ) {
+    emit(state.copyWith(rememberMe: !state.rememberMe));
+  }
+
+  void _onToggleAcceptTCEvent(
+    ToggleAcceptTCEvent event,
+    Emitter<SignInState> emit,
+  ) {
+    emit(state.copyWith(acceptTC: !state.acceptTC));
   }
 }

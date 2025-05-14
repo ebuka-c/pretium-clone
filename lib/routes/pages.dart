@@ -4,13 +4,14 @@ import 'package:pretium_clone/application/authentication/intro/onboarding_screen
 import 'package:pretium_clone/application/authentication/intro/splash_screen.dart';
 import 'package:pretium_clone/application/authentication/signIn/bloc/sign_in_bloc.dart';
 import 'package:pretium_clone/application/authentication/signIn/sign_in.dart';
-import 'package:pretium_clone/application/authentication/signUp/email_verification/otp_screen.dart';
-import 'package:pretium_clone/application/authentication/signUp/get_started.dart';
+import 'package:pretium_clone/application/authentication/recovery/otp_screen.dart';
 import 'package:pretium_clone/routes/names.dart';
 
+import '../application/authentication/recovery/forgot_pwd.dart';
+import '../application/authentication/recovery/reset_pwd.dart';
 import '../application/authentication/signUp/signup_screen.dart';
+import '../application/authentication/signUp/verify_account.dart';
 import '../application/user/home/bloc/home_bloc.dart';
-import '../application/user/home/home_screen.dart';
 
 class AppPages {
   static List<PageEntity> routes() {
@@ -25,19 +26,15 @@ class AppPages {
         page: const OnboardingScreen(),
         bloc: BlocProvider(create: (_) => SignInBloc()),
       ),
-      PageEntity(
-        route: AppRoutes.getStarted,
-        page: GetStarted(),
-        bloc: BlocProvider(create: (_) => SignInBloc()),
-      ),
+
       PageEntity(
         route: AppRoutes.signIn,
-        page: const SignInScreen(),
+        page: SignInScreen(),
         bloc: BlocProvider(create: (_) => SignInBloc()),
       ),
       PageEntity(
         route: AppRoutes.signUp,
-        page: const SignupScreen(),
+        page: SignupScreen(),
         bloc: BlocProvider(create: (_) => SignInBloc()),
       ),
       PageEntity(
@@ -45,9 +42,24 @@ class AppPages {
         page: OtpEmailVerification(),
         bloc: BlocProvider(create: (_) => SignInBloc()),
       ),
+      // PageEntity(
+      //   route: AppRoutes.homeScreen,
+      //   page: HomeScreen(),
+      //   bloc: BlocProvider(create: (_) => HomeBloc()),
+      // ),
       PageEntity(
-        route: AppRoutes.homeScreen,
-        page: HomeScreen(),
+        route: AppRoutes.forgotPwd,
+        page: ForgotPwd(),
+        bloc: BlocProvider(create: (_) => HomeBloc()),
+      ),
+      PageEntity(
+        route: AppRoutes.resetPwd,
+        page: ResetPwd(),
+        bloc: BlocProvider(create: (_) => HomeBloc()),
+      ),
+      PageEntity(
+        route: AppRoutes.verifyAccount,
+        page: VerifyAccount(),
         bloc: BlocProvider(create: (_) => HomeBloc()),
       ),
     ];

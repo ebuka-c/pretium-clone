@@ -34,7 +34,7 @@ final bodyMedium = TextStyle(
 );
 
 final bodySmall = TextStyle(
-  fontSize: 13.sp,
+  fontSize: 14.sp,
   fontWeight: FontWeight.w400,
   color: AppColors.primaryText,
 );
