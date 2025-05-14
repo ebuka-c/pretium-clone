@@ -53,11 +53,10 @@ class _DropdownbtnFormfieldState extends State<DropdownbtnFormfield> {
     return Container(
       // height: widget.height,
       margin: widget.margin,
-      decoration: BoxDecoration(
-        color: Color(0xffF5F9FE),
-        border: Border.all(color: AppColors.btnBorder, width: 1.5),
-        borderRadius: BorderRadius.circular(14),
-      ),
+      // decoration: BoxDecoration(
+      //   border: Border.all(color: AppColors.grey, width: 0.5),
+      //   borderRadius: BorderRadius.circular(10),
+      // ),
       child: DropdownButtonFormField<String>(
         value: widget.value,
         alignment: AlignmentDirectional.bottomEnd,
@@ -90,23 +89,30 @@ class _DropdownbtnFormfieldState extends State<DropdownbtnFormfield> {
             left: widget.leftContentPadding ?? 30.w,
             right: 10,
           ),
+          focusedBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(10),
+            borderSide: BorderSide(color: Colors.grey, width: 1.0),
+          ),
           fillColor: widget.fillColor ?? AppColors.white,
-          border: widget.border ?? InputBorder.none,
+          border: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(10),
+            borderSide: BorderSide(color: Colors.grey, width: 1.0),
+          ),
           errorBorder: OutlineInputBorder(
-            borderSide: const BorderSide(width: 1, color: AppColors.red),
-            borderRadius: BorderRadius.circular(widget.radius ?? 15),
+            borderSide: BorderSide(width: 1, color: AppColors.maroon),
+            borderRadius: BorderRadius.circular(10),
           ),
           focusedErrorBorder: OutlineInputBorder(
-            borderSide: const BorderSide(width: 1, color: AppColors.red),
-            borderRadius: BorderRadius.circular(widget.radius ?? 15.sp),
+            borderSide: BorderSide(width: 1.5, color: AppColors.maroon),
+            borderRadius: BorderRadius.circular(10),
+          ),
+          errorStyle: bodySmall.copyWith(
+            color: AppColors.maroon,
+            fontSize: 11.sp,
           ),
           enabledBorder: OutlineInputBorder(
-            borderSide: widget.borderSide ?? BorderSide.none,
-            borderRadius: BorderRadius.circular(widget.radius ?? 15.sp),
-          ),
-          focusedBorder: OutlineInputBorder(
-            borderSide: widget.borderSide ?? BorderSide.none,
-            borderRadius: BorderRadius.circular(widget.radius ?? 15.sp),
+            borderRadius: BorderRadius.circular(10),
+            borderSide: BorderSide(color: Colors.grey, width: 0.5),
           ),
           hintText: widget.hintText,
           hintStyle:

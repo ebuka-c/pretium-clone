@@ -8,6 +8,7 @@ import 'package:pretium_clone/utils/validators.dart';
 
 import '../../../constants/custom_textstyles.dart';
 import '../../../widgets/buttons/app_button.dart';
+import '../../../widgets/iconbox/iconbox.dart';
 import '../../../widgets/textfield/auth_textfield.dart';
 import 'bloc/sign_in_bloc.dart';
 
@@ -30,18 +31,7 @@ class SignInScreen extends StatelessWidget {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Container(
-                  padding: EdgeInsets.all(12.sp),
-                  decoration: BoxDecoration(
-                    color: AppColors.secondary,
-                    borderRadius: BorderRadius.circular(15),
-                  ),
-                  child: Icon(
-                    Icons.account_balance_wallet,
-                    color: AppColors.primary,
-                    size: 30.sp,
-                  ),
-                ),
+                IconBox(),
                 SizedBox(height: 20.h),
                 Text(
                   'Welcome Back!',

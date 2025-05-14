@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-void showRememberMeSnackbar(BuildContext context) {
+void acceptTCSnackbar(BuildContext context) {
   final scaffoldMessenger = ScaffoldMessenger.of(context);
 
   scaffoldMessenger.showSnackBar(

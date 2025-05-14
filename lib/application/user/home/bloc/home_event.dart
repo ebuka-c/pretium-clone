@@ -6,3 +6,10 @@ sealed class HomeEvent extends Equatable {
   @override
   List<Object> get props => [];
 }
+
+final class ToggleBalanceHideEvent extends HomeEvent {}
+
+class SelectCountryEvent extends HomeEvent {
+  final String country;
+  const SelectCountryEvent(this.country);
+}

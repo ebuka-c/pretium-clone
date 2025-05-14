@@ -12,6 +12,7 @@ import '../application/authentication/recovery/reset_pwd.dart';
 import '../application/authentication/signUp/signup_screen.dart';
 import '../application/authentication/signUp/verify_account.dart';
 import '../application/user/home/bloc/home_bloc.dart';
+import '../application/user/home/home_screen.dart';
 
 class AppPages {
   static List<PageEntity> routes() {
@@ -42,11 +43,11 @@ class AppPages {
         page: OtpEmailVerification(),
         bloc: BlocProvider(create: (_) => SignInBloc()),
       ),
-      // PageEntity(
-      //   route: AppRoutes.homeScreen,
-      //   page: HomeScreen(),
-      //   bloc: BlocProvider(create: (_) => HomeBloc()),
-      // ),
+      PageEntity(
+        route: AppRoutes.homeScreen,
+        page: HomeScreen(),
+        bloc: BlocProvider(create: (_) => HomeBloc()),
+      ),
       PageEntity(
         route: AppRoutes.forgotPwd,
         page: ForgotPwd(),

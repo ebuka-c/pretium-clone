@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:pretium_clone/application/authentication/signIn/bloc/sign_in_bloc.dart';
+import 'package:pretium_clone/constants/locals.dart';
 import 'package:pretium_clone/routes/names.dart';
 import 'package:pretium_clone/utils/validators.dart';
 import 'package:pretium_clone/widgets/snackbar/snackbar.dart';
@@ -168,13 +169,12 @@ class SignupScreen extends StatelessWidget {
 
                     if (formKey.currentState?.validate() ?? false) {
                       if (acceptTC) {
-                        //go to verify
+                        getStorageInstance.write(F_NAME, _fNameC.text.trim());
                         Navigator.of(
                           context,
                         ).pushNamed(AppRoutes.verifyAccount);
                       } else {
-                        //will take care of this
-                        showRememberMeSnackbar(context);
+                        acceptTCSnackbar(context);
                       }
                     }
                   },

@@ -1,4 +1,3 @@
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -15,7 +14,9 @@ import '../../../widgets/textfield/auth_textfield.dart';
 final _pinC = TextEditingController();
 
 class VerifyAccount extends StatelessWidget {
-  const VerifyAccount({super.key});
+  VerifyAccount({super.key});
+  String? selectedCountry = '';
+  final formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
@@ -68,13 +69,18 @@ class VerifyAccount extends StatelessWidget {
                     'Uganda',
                     'Nigeria',
                     'Malawi',
+                    'Ghana',
                     'Global users',
                   ],
+                  onChanged: (value) {
+                    selectedCountry = value;
+                  },
                 ),
                 SizedBox(height: 22.h),
                 AuthTextField(
                   controller: _pinC,
                   keyboardType: TextInputType.number,
+                  autovalidateMode: AutovalidateMode.onUserInteraction,
                   inputFormatters: [
                     LengthLimitingTextInputFormatter(4),
                     integerInputFormatter,
@@ -94,7 +100,7 @@ class VerifyAccount extends StatelessWidget {
                   onTap: () {
                     if (formKey.currentState?.validate() ?? false) {
                       Navigator.of(context).pushNamedAndRemoveUntil(
-                        AppRoutes.homeScreen,
+                        AppRoutes.signIn,
                         (Route<dynamic> route) => false,
                       );
                     }
@@ -104,33 +110,6 @@ class VerifyAccount extends StatelessWidget {
                   text: 'Login',
                 ),
                 SizedBox(height: 50.h),
-
-                Text.rich(
-                  textAlign: TextAlign.center,
-                  TextSpan(
-                    children: [
-                      TextSpan(
-                        text: 'Don\'t have an account? ',
-                        style: bodySmall.copyWith(
-                          color: AppColors.secondaryText,
-                        ),
-                      ),
-                      TextSpan(
-                        text: 'Sign Up',
-                        style: bodySmall.copyWith(
-                          fontWeight: FontWeight.w600,
-                          color: AppColors.primary,
-                        ),
-                        recognizer:
-                            TapGestureRecognizer()
-                              ..onTap =
-                                  () => Navigator.of(
-                                    context,
-                                  ).pushNamed(AppRoutes.signUp),
-                      ),
-                    ],
-                  ),
-                ),
               ],
             ),
           ),

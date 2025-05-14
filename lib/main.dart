@@ -62,7 +62,7 @@ class MyApp extends StatelessWidget {
               ),
               useMaterial3: true,
               fontFamily: 'roboto',
-              scaffoldBackgroundColor: AppColors.white,
+              scaffoldBackgroundColor: AppColors.bg,
               appBarTheme: AppBarTheme(
                 backgroundColor: AppColors.transparent,
                 foregroundColor: AppColors.primaryText,
